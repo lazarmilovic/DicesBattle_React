@@ -13,7 +13,7 @@ Eah player's health is represented with a number (100) and a div with a green ba
 The goal of the game is to lower your opponent's energy level to 0. After that happens, the top level component (App) will re-render another Game component with a different key. 
 
 ## Screenshot
-![alt text](https://github.com/lazarmilovic/DicesBattle_React/edit/gh-pages/master/Preview.png?raw=true)
+![alt text](https://github.com/lazarmilovic/DicesBattle_React/blob/gh-pages/master/Preview.png?raw=true)
 
 
 ## Technologies 
