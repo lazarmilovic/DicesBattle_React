@@ -10,15 +10,15 @@ body,
   display: flex;
   justify-content: center;
   align-items: center;
-  background-image: linear-gradient(to right, #141e30, #243b55);
+  background-image: linear-gradient(to right, #5a3f37, #2c7744);
 }
 
 .container {
   width: 60%;
   height: 80%;
-  background-image: linear-gradient(to right, #d17a7a, #cfcfc4);
+  background-image: linear-gradient(to right, #141e30, #243b55);
   border: 2px solid;
-  border-color: firebrick;
+  border-color: #403a3e;
   display: flex;
   box-shadow: 10px 5px #888888;
 }
@@ -30,8 +30,7 @@ body,
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
-  color: firebrick;
-  text-shadow: 2px 2px white;
+  color: #757519;
 }
 .player h3 {
   visibility: hidden;
@@ -64,7 +63,9 @@ body,
 }
 
 .active {
-  background-color: #ccccff;
+  border: 1px solid;
+  border-color: firebrick;
+  color: firebrick;
 }
 .active h3 {
   visibility: visible;
@@ -75,7 +76,7 @@ body,
   width: 20%;
   border-left: 2px solid;
   border-right: 2px solid;
-  border-color: firebrick;
+  border-color: #403a3e;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;

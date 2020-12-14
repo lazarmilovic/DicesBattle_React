@@ -25,16 +25,17 @@ const Game = (props) => {
 
   const startTheGame = () => {
     let Player1 = prompt("Please set name for Player 1");
-    setPlayer1_name(Player1);
+    setPlayer1_name(Player1.toUpperCase());
     let Player2 = prompt("Please set name for Player 2");
-    setPlayer2_name(Player2);
+    setPlayer2_name(Player2.toUpperCase());
     setGameHasStarted(true);
   };
-
+  //this function will be used to send props to Player component wich will set active class to one of the components.
   const checkActiveClass = (player) => {
     return player === activePlayer ? "active" : "";
   };
 
+  //useEffect will be called once a player rolled the dices and set totalHit constant to a number greater than 0 and will reduce opponent's health by one on every 0.3 seconds and also decrement totalHit by one every time player's health is decremented. Once totalHit reaches 0, it will change the playerIsWounded const to false so the "Roll" button can be displayed again and the opponent can roll the dices.
   useEffect(() => {
     if (totalHit > 0 && !gameHasFinished) {
       let timer = setInterval(() => {
@@ -55,32 +56,31 @@ const Game = (props) => {
       return () => {
         clearInterval(timer);
       };
+    } else {
+      setPlayerIsWounded(false);
+      setActivePlayer(woundedPlayer);
     }
   });
 
+  //this function will check if the game has started first- if so, it will set playerIsWounded to true and the Roll button will be disabled in order to stop another player to roll the dices while losing health.
   const rollTheDices = () => {
     if (!gameHasStarted) {
       alert("Please start the game first!");
     } else {
-      //let woundedPlayer = activePlayer === 1 ? 2 : 1;
+      setPlayerIsWounded(true);
+      //getting random number 1-6 for two dices and the sum of it will be the totalHit const.
       let dice_1 = Math.floor(Math.random() * 6) + 1;
       let dice_2 = Math.floor(Math.random() * 6) + 1;
       let _totalHit = dice_1 + dice_2;
       setTotalHit(_totalHit);
+      //changing the source of the dice images.
       let dice_1_src = changeDices(dice_1);
       let dice_2_src = changeDices(dice_2);
       setDice1(dice_1_src);
       setDice2(dice_2_src);
-      /*let health;
-      if (woundedPlayer === 1) {
-        health = player1_health - totalHit;
-        setPlayer1_health(health);
-      } else {
-        health = player2_health - totalHit;
-        setPlayer2_health(health);
-      } */
-      //checkTheVictory();
+      //setting a new activePlayer- it is now the player that was "wounded".
       setActivePlayer(woundedPlayer);
+      //setting new woudnedPlayer.
       if (woundedPlayer === 2) {
         setWoundedPlayer(1);
       } else {
@@ -100,16 +100,16 @@ const Game = (props) => {
 
   //this function will check if any of the player has won- or if the opponent has reached 0 energy level.
   const checkTheVictory = () => {
-    if (player1_health <= 90 || player2_health <= 90) {
+    if (player1_health < 1 || player2_health < 1) {
       setGameHasFinished(true);
     }
   };
-
+  //this statement will watch for a change in gameHasFinished const- once it becomes true, it will alert the winner and render new Game component with a different key.
   if (gameHasFinished) {
     if (player1_health > player2_health) {
-      alert(`Congrats to ${player1_name}, you won!`);
+      alert(`Congrats to ${player1_name}, you won! The game will reload.`);
     } else {
-      alert(`Congrats to ${player2_name}, you won!`);
+      alert(`Congrats to ${player2_name}, you won! The game will reload.`);
     }
 
     props.setNewGame();
@@ -130,6 +130,7 @@ const Game = (props) => {
         rolling={rollTheDices}
         src_dice1={dice1}
         src_dice2={dice2}
+        playerIsWounded={playerIsWounded}
       />
       <Player
         name={player2_name}
